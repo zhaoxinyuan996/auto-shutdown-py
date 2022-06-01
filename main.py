@@ -29,7 +29,6 @@ class StackedExample(QWidget):
         self.setLayout(hbox)
 
 
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     main = StackedExample()
