@@ -3,6 +3,7 @@ import json
 from PyQt5.QtWidgets import QWidget, QLabel, QCheckBox, QPushButton, QMessageBox, QLineEdit
 
 from mapping import act_map, fac_map
+from script import ExtendJson
 from ui.base_qt import BaseQt
 
 
@@ -27,11 +28,13 @@ class Entry:
 
         name = BaseQt(QLineEdit, e, name='name')
         name.setGeometry(100, 0, 500, 50)
+        name.setText(f'''{conf['act'][0]}->{conf['fac'][0]}''')
 
-        repeat = BaseQt(QCheckBox, e, name='repeat')
-        repeat.setGeometry(650, 0, 150, 50)
-        repeat.setChecked(True)
-        repeat.setText('重复')
+        # 重复功能貌似没意义
+        # repeat = BaseQt(QCheckBox, e, name='repeat')
+        # repeat.setGeometry(650, 0, 150, 50)
+        # repeat.setChecked(True)
+        # repeat.setText('重复')
 
         is_enable = BaseQt(QCheckBox, e, name='is_enable')
         is_enable.setGeometry(780, 0, 150, 50)
@@ -45,7 +48,7 @@ class Entry:
 
         if from_file:
             name.setText(conf['name'])
-            repeat.setChecked(conf['repeat'])
+            # repeat.setChecked(conf['repeat'])
             is_enable.setChecked(conf['is_enable'])
 
         e.show()
@@ -53,30 +56,30 @@ class Entry:
         e.conf = conf
         self.entry_list.append(e)
 
+    def _check(self, _value, _map, _name):
+        """上下选项卡相同逻辑，eval会用到self"""
+        _msg = {}
+        if _value:
+            _value = eval(_value)
+            _msg = _map[_name][1](_value)
+        return _msg
+
     def check(self):
         """检查当前入参，失败返回false，成功返回配置"""
         # entry总体检查
         if self.length >= 5:
             return ValueError('只能存在5条任务')
         # entry内容检查
-        act_msg = fac_msg = None
         act_name = self.base.ta1.tabText(self.base.ta1.currentIndex())
         fac_name = self.base.ta2.tabText(self.base.ta2.currentIndex())
         act_value, act_check = act_map[act_name]
         fac_value, fac_check = fac_map[fac_name]
         # 有值则校验
-        if act_value:  # 上部选项卡参数校验
-            act_value = eval(act_value)
-            try:
-                act_msg = fac_map[act_name][1](act_value)
-            except ValueError as e:
-                return e
-        if fac_value:  # 下部选项卡参数校验
-            fac_value = eval(fac_value)
-            try:
-                fac_msg = fac_map[fac_name][1](fac_value)
-            except ValueError as e:
-                return e
+        try:
+            act_msg = self._check(act_value, act_map, act_name)
+            fac_msg = self._check(fac_value, fac_map, fac_name)
+        except ValueError as e:
+            return e
 
         return {
                 'act': (act_name, act_msg),
@@ -118,10 +121,10 @@ class Entry:
         for i in self.entry_list:
             i.conf['name'] = i.name.text()
             i.conf['is_enable'] = bool(i.is_enable.checkState())
-            i.conf['repeat'] = bool(i.repeat.checkState())
+            # i.conf['repeat'] = bool(i.repeat.checkState())
             config.append(i.conf)
         with open('./config.json', 'w', encoding='utf-8') as f:
-            f.write(json.dumps(config, ensure_ascii=False))
+            f.write(json.dumps(config, ensure_ascii=False, cls=ExtendJson))
 
         print(config)
         self.activate_job()
