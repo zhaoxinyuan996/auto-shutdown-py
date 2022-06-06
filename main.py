@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QApplication, QTabWidget
 class AutoShutdown(QWidget):
     """这里只写大模块，细分模块在qt文件夹"""
     def __init__(self):
+        # todo 禁止缩放窗口
         super().__init__()
         self.size_shadow = [1000, 800]
         self.resize(*self.size_shadow)

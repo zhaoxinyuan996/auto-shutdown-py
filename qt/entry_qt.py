@@ -1,3 +1,4 @@
+import os
 import json
 from functools import partial
 from script import ExtendJson
@@ -64,18 +65,32 @@ class Entry:
             _msg = _map[_name][1](_value)
         return _msg
 
+    @staticmethod
+    def _get_act_fac(act_name, fac_name):
+        act_value, act_check = act_map.get(act_name, (None, None))
+        fac_value, fac_check = fac_map.get(fac_name, (None, None))
+
+        err = ''
+        if act_value is None:
+            err += f'动作[{act_name}]未实现\n'
+        if fac_value is None:
+            err += f'触发[{fac_name}]未实现\n'
+        if err:
+            raise ValueError(err)
+
+        return act_value, act_check, fac_value, fac_check
+
     def check(self):
         """检查当前入参，失败返回false，成功返回配置"""
         # entry总体检查
         if self.length >= 5:
             return ValueError('只能存在5条任务')
         # entry内容检查
-        act_name = self.base.ta1.tabText(self.base.ta1.currentIndex())
-        fac_name = self.base.ta2.tabText(self.base.ta2.currentIndex())
-        act_value, act_check = act_map[act_name]
-        fac_value, fac_check = fac_map[fac_name]
-        # 有值则校验
         try:
+            act_name = self.base.ta1.tabText(self.base.ta1.currentIndex())
+            fac_name = self.base.ta2.tabText(self.base.ta2.currentIndex())
+            act_value, act_check, fac_value, fac_check = self._get_act_fac(act_name, fac_name)
+            # 有值则校验
             act_msg = self._check(act_value, act_map, act_name)
             fac_msg = self._check(fac_value, fac_map, fac_name)
         except ValueError as e:
@@ -128,6 +143,7 @@ class Entry:
 
         print(config)
         self.activate_job()
+        QMessageBox.critical(self.base, '应用', '应用成功')
 
     def recovery(self):
         """读取配置文件恢复ui"""
@@ -136,6 +152,7 @@ class Entry:
         for i in config:
             self.add_entry(i)
 
-    def activate_job(self):
+    @staticmethod
+    def activate_job():
         """触发后台任务"""
-        ...
+        print(os.system(r'.\auto_job.exe'))

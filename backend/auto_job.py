@@ -24,11 +24,17 @@ def wrap(func: Callable):
 
 @wrap
 def act_1():
-    print('shutdown')
+    os.system('shutdown -f -s -t 0')
+
+
+@wrap
+def act_2():
+    os.system('shutdown -r -f -t 0')
 
 
 func_map = {
-    '关机': act_1
+    '关机': act_1,
+    '重启': act_2,
 }
 
 
@@ -66,7 +72,7 @@ class GetJob:
 
     exec_list = []
     scheduler = BackgroundScheduler()
-    with open('../config.json', encoding='utf-8') as f:
+    with open('./config.json', encoding='utf-8') as f:
         config: List[Dict[str, Any]] = json.loads(f.read())
 
     def gen_params(self):

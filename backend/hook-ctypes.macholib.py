@@ -11,5 +11,8 @@ datas = copy_metadata('apscheduler') + copy_metadata('six') + copy_metadata('tzl
 
 # 这里会维护一份job和ui必须要的打包的包，全打包体积太大吃不消
 #   job
-
+# pydantic
+# apscheduler 
 #   ui
+# pydantic
+# pyqt5
