@@ -1,10 +1,9 @@
-from functools import partial
 import json
-from PyQt5.QtWidgets import QWidget, QLabel, QCheckBox, QPushButton, QMessageBox, QLineEdit
-
-from mapping import act_map, fac_map
+from functools import partial
 from script import ExtendJson
-from ui.base_qt import BaseQt
+from qt.base_qt import BaseQt
+from mapping import act_map, fac_map
+from PyQt5.QtWidgets import QWidget, QLabel, QCheckBox, QPushButton, QMessageBox, QLineEdit
 
 
 class Entry:
@@ -58,7 +57,8 @@ class Entry:
 
     def _check(self, _value, _map, _name):
         """上下选项卡相同逻辑，eval会用到self"""
-        _msg = {}
+        # 不飘黄行不行？
+        _msg = self and {}
         if _value:
             _value = eval(_value)
             _msg = _map[_name][1](_value)
@@ -139,10 +139,3 @@ class Entry:
     def activate_job(self):
         """触发后台任务"""
         ...
-
-
-def ta2_ta2_tick_click(tick_no, self):
-    """复选框联动文本框，self: base.ta2.ta2"""
-    label = getattr(self, f'te{tick_no}')
-    flag = getattr(self, f'ti{tick_no}').checkState()
-    label.setEnabled(not flag)

@@ -1,12 +1,13 @@
-import json
-import multiprocessing
 import sys
 import os
+import json
+import multiprocessing
 from time import sleep
 from datetime import datetime
-from typing import Dict, Union, List, Any, Tuple, Callable
 from pydantic import BaseModel, validator
+from typing import Dict, Union, List, Any, Tuple, Callable
 from apscheduler.schedulers.background import BackgroundScheduler
+
 # BackgroundScheduler
 # BlockingScheduler
 # 目前是用异步执行器
@@ -61,6 +62,8 @@ class Config(BaseModel):
 
 class GetJob:
     # __class__伪单例，写在类命令空间即可
+    def __init__(self): ...
+
     exec_list = []
     scheduler = BackgroundScheduler()
     with open('../config.json', encoding='utf-8') as f:
