@@ -1,4 +1,22 @@
 # auto-shutdown-py
+## 注意事项
+
+### 添加win10白名单
+
+![](https://github.com/zhaoxinyuan996/auto-shutdown-py/blob/main/md/step1.png)
+
+![](https://github.com/zhaoxinyuan996/auto-shutdown-py/blob/main/md/step2.png)
+
+![](https://github.com/zhaoxinyuan996/auto-shutdown-py/blob/main/md/step3.png)
+
+![](https://github.com/zhaoxinyuan996/auto-shutdown-py/blob/main/md/step4.png)
+
+![](https://github.com/zhaoxinyuan996/auto-shutdown-py/blob/main/md/step5.png)
+
+打包过程
+
+
+
 ## ui节点层级关系
 
 ```
