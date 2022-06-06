@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QTabWidget, QWidget
 
 
 def wrap(cls):
-    """new方法写工厂模式挺乱的，各种继承容易出问题，这里用装饰器实现"""
+    """new方法做工厂模式在此场景不合适，这里用装饰器实现比较方便"""
     def f(qt, base, name=''):
         qt_obj = qt(base)
         setattr(base, name, qt_obj)
