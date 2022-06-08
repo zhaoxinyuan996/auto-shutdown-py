@@ -1,10 +1,10 @@
 from time import strftime
-from script import cd_to_sec
+from code.script import cd_to_sec
 from functools import partial
-from qt.base_qt import BaseQt
-from qt.any_qt import ta2_ta2_tick_click
+from code.qt.base_qt import BaseQt
+from code.qt.any_qt import ta2_ta2_tick_click
 from PyQt5.QtWidgets import QLabel, QLineEdit, QCheckBox
-from common import range_99, range_24, range_60, range_9999
+from code.common import range_99, range_24, range_60, range_9999
 
 
 def ui_tab_fac_1(self):

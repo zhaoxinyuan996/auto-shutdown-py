@@ -1,9 +1,9 @@
 import os
 import json
 from functools import partial
-from script import ExtendJson
-from qt.base_qt import BaseQt
-from mapping import act_map, fac_map
+from code.script import ExtendJson
+from code.qt.base_qt import BaseQt
+from code.mapping import act_map, fac_map
 from PyQt5.QtWidgets import QWidget, QLabel, QCheckBox, QPushButton, QMessageBox, QLineEdit
 
 

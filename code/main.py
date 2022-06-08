@@ -1,7 +1,7 @@
 import sys
-from qt.entry_qt import Entry
-from qt.base_qt import BaseQt
-from qt.fac_qt import ui_tab_fac_1, ui_tab_fac_2
+from code.qt.entry_qt import Entry
+from code.qt.base_qt import BaseQt
+from code.qt.fac_qt import ui_tab_fac_1, ui_tab_fac_2
 from PyQt5.QtWidgets import QWidget, QPushButton, QApplication, QTabWidget
 
 
@@ -59,8 +59,12 @@ class AutoShutdown(QWidget):
         ui_tab_fac_2(self)
 
 
+def main():
+    _app = QApplication(sys.argv)
+    _main = AutoShutdown()
+    _main.show()
+    sys.exit(_app.exec_())
+
+
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    main = AutoShutdown()
-    main.show()
-    sys.exit(app.exec_())
+    main()

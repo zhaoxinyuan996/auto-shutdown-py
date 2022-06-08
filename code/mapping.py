@@ -1,4 +1,4 @@
-from script import cd_check, timing_check
+from code.script import cd_check, timing_check
 
 # Dict[选项卡名字: (取值, 校验)]
 act_map = {
