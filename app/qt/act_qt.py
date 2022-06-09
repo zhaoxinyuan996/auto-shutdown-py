@@ -2,7 +2,7 @@ from app.qt.base_qt import BaseQt
 from PyQt5.QtWidgets import QLabel, QLineEdit, QCheckBox
 
 
-def ui_tab_act_5(self):
+def ui_tab_act_3(self):
     label = BaseQt(QLabel, self, 'la1')
     label.setText('提醒语')
     label.setGeometry(50, 30, 800, 40)
@@ -18,7 +18,7 @@ def ui_tab_act_5(self):
     tick.setGeometry(50, 126, 50, 50)
 
 
-def ui_tab_act_6(self):
+def ui_tab_act_4(self):
     label = BaseQt(QLabel, self, 'la1')
     label.setText('cmd命令：')
     label.setGeometry(50, 80, 800, 40)

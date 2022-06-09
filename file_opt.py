@@ -1,9 +1,24 @@
-# conf.json remind logs.txt
 import os
 import sys
 
 
+# run.py/run.exe文件入口，调用后台py
+call_file = r'python .\backend\auto_job.py'
+# run.py/run.exe文件入口，调用后台exe
+# call_file = r'.\auto_job.exe'
+
+
 file = os.path.dirname(__file__ if os.path.basename(sys.executable) == 'python.exe' else sys.argv[0])
+
+# 这里写一些初始化文件相关的，省的打包之后手动新建
+path = os.path.join(file, 'config.json')
+if not os.path.exists(path):
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write('[]')
+
+path = os.path.join(file, 'remind')
+if not os.path.exists(path):
+    os.mkdir(path)
 
 
 class File:
@@ -14,10 +29,13 @@ class File:
     }
 
     def __init__(self, name, **kwargs):
+        # 文件类型
         if name in self.level:
             self.real_path = self.get_file_path(name)
+        # 文件夹类型
         else:
             self.real_path = name
+
         self.kwargs = kwargs
 
     def __enter__(self):

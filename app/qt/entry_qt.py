@@ -6,7 +6,7 @@ from app.qt.base_qt import BaseQt
 from app.mapping import add_map, delete_map, save_map
 from PyQt5.QtWidgets import QWidget, QLabel, QCheckBox, QPushButton, QMessageBox, QLineEdit
 
-from file_opt import File
+from file_opt import File, call_file
 
 
 class Entry:
@@ -154,4 +154,4 @@ class Entry:
     @staticmethod
     def activate_job():
         """触发后台任务"""
-        print(os.system(r'.\auto_job.exe'))
+        os.popen(call_file)

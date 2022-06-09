@@ -34,7 +34,7 @@ def act_2():
 
 
 @wrap
-def act_5(**kwargs):
+def act_3(**kwargs):
     name = kwargs['name']
     repeat = kwargs['repeat']
     if repeat:
@@ -44,15 +44,15 @@ def act_5(**kwargs):
 
 
 @wrap
-def act_6(**kwargs):
+def act_3(**kwargs):
     os.system(kwargs['cmd'])
 
 
 func_map = {
     '关机': act_1,
     '重启': act_2,
-    '提醒': act_5,
-    '命令': act_6
+    '提醒': act_3,
+    '命令': act_4
 }
 
 

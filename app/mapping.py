@@ -5,8 +5,8 @@ from app.script import cd_check, timing_check, cmd_check, remind_check, interval
 add_map = {
     '关机': (None, None),
     '重启': (None, None),
-    '提醒': ('self.base.ta1.ta5', remind_check),
-    '命令': ('self.base.ta1.ta6.li1', cmd_check),
+    '提醒': ('self.base.ta1.ta3', remind_check),
+    '命令': ('self.base.ta1.ta5.li1', cmd_check),
 
     '倒计时': ('self.base.ta2.ta1.time', cd_check),
     '间隔': ('self.base.ta2.ta2', interval_check),
@@ -18,5 +18,5 @@ delete_map = {
 }
 
 save_map = {
-    # '提醒': ('self.base.ta1.ta5', remind_save_hook),
+
 }

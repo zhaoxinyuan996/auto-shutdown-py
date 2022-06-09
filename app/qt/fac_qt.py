@@ -56,7 +56,7 @@ def ui_tab_fac_1(self):
 def ui_tab_fac_2(self):
     label = BaseQt(QLabel, self.ta2.ta2, 'la1')
     label.setText('时间间隔(秒)')
-    label.setGeometry(250, 150, 100, 40)
+    label.setGeometry(250, 150, 150, 40)
 
     line = BaseQt(QLineEdit, self.ta2.ta2, 'li1')
     line.setGeometry(250, 200, 100, 40)
@@ -64,11 +64,30 @@ def ui_tab_fac_2(self):
 
 
 def ui_tab_fac_3(self):
-    label = BaseQt(QLabel, self.ta2.ta3, name='l1')
-    label.setText('年\n\n月份\n\n星期\n\n日\n\n时\n\n分\n\n秒')
-    label.setGeometry(200, 20, 80, 400)
-
     n = 54
+
+    label = BaseQt(QLabel, self.ta2.ta3, name='la1')
+    label.setText('年')
+    label.setGeometry(200, 32, 80, 50)
+    label = BaseQt(QLabel, self.ta2.ta3, name='la2')
+    label.setText('月份')
+    label.setGeometry(200, 32 + n * 1, 80, 50)
+    label = BaseQt(QLabel, self.ta2.ta3, name='la3')
+    label.setText('星期')
+    label.setGeometry(200, 32 + n * 2, 80, 50)
+    label = BaseQt(QLabel, self.ta2.ta3, name='la4')
+    label.setText('日')
+    label.setGeometry(200, 32 + n * 3, 80, 50)
+    label = BaseQt(QLabel, self.ta2.ta3, name='la5')
+    label.setText('时')
+    label.setGeometry(200, 32 + n * 4, 80, 50)
+    label = BaseQt(QLabel, self.ta2.ta3, name='la6')
+    label.setText('分')
+    label.setGeometry(200, 32 + n * 5, 80, 50)
+    label = BaseQt(QLabel, self.ta2.ta3, name='la7')
+    label.setText('秒')
+    label.setGeometry(200, 32 + n * 6, 80, 50)
+
     tick = BaseQt(QCheckBox, self.ta2.ta3, name='ti1')
     tick.setGeometry(150, 32, 50, 50)
     tick.clicked.connect(partial(ta2_ta3_tick_click, '1', self.ta2.ta3))
@@ -93,28 +112,21 @@ def ui_tab_fac_3(self):
 
     te = BaseQt(QLineEdit, self.ta2.ta3, name='te1')
     te.setGeometry(270, 38, 100, 40)
-    te.setValidator(range_9999)
 
     te = BaseQt(QLineEdit, self.ta2.ta3, name='te2')
-    te.setGeometry(270, 38 + n * 1, 50, 40)
-    te.setValidator(range_99)
+    te.setGeometry(270, 38 + n * 1, 100, 40)
 
     te = BaseQt(QLineEdit, self.ta2.ta3, name='te3')
-    te.setGeometry(270, 38 + n * 2, 50, 40)
-    te.setValidator(range_99)
+    te.setGeometry(270, 38 + n * 2, 100, 40)
 
     te = BaseQt(QLineEdit, self.ta2.ta3, name='te4')
-    te.setGeometry(270, 38 + n * 3, 50, 40)
-    te.setValidator(range_99)
+    te.setGeometry(270, 38 + n * 3, 100, 40)
 
     te = BaseQt(QLineEdit, self.ta2.ta3, name='te5')
-    te.setGeometry(270, 38 + n * 4, 50, 40)
-    te.setValidator(range_99)
+    te.setGeometry(270, 38 + n * 4, 100, 40)
 
     te = BaseQt(QLineEdit, self.ta2.ta3, name='te6')
-    te.setGeometry(270, 38 + n * 5, 50, 40)
-    te.setValidator(range_99)
+    te.setGeometry(270, 38 + n * 5, 100, 40)
 
     te = BaseQt(QLineEdit, self.ta2.ta3, name='te7')
-    te.setGeometry(270, 38 + n * 6, 50, 40)
-    te.setValidator(range_99)
+    te.setGeometry(270, 38 + n * 6, 100, 40)

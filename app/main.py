@@ -1,17 +1,22 @@
 import sys
+from functools import partial
 
-from app.qt.act_qt import ui_tab_act_6, ui_tab_act_5
+from PyQt5 import QtCore
+
+from app.qt.any_qt import show_power_by
 from app.qt.entry_qt import Entry
 from app.qt.base_qt import BaseQt
+from app.qt.act_qt import ui_tab_act_3, ui_tab_act_4
 from app.qt.fac_qt import ui_tab_fac_1, ui_tab_fac_2, ui_tab_fac_3
-from PyQt5.QtWidgets import QWidget, QPushButton, QApplication, QTabWidget
+from PyQt5.QtWidgets import QWidget, QPushButton, QApplication, QTabWidget, QStyleFactory
 
 
 class AutoShutdown(QWidget):
     """这里只写大模块，细分模块在qt文件夹"""
     def __init__(self):
-        # todo 禁止缩放窗口
         super().__init__()
+        self.setWindowFlags(QtCore.Qt.MSWindowsFixedSizeDialogHint)
+
         self.size_shadow = [1000, 800]
         self.resize(*self.size_shadow)
         self.setWindowTitle("自动关机")
@@ -36,6 +41,11 @@ class AutoShutdown(QWidget):
         btn.setGeometry(850, 760, 150, 40)
         btn.clicked.connect(self.entry.save)
 
+        btn = QPushButton(self)
+        btn.setText('关于')
+        btn.setGeometry(0, 760, 150, 40)
+        btn.clicked.connect(partial(show_power_by, self))
+
     def ui_tab_act(self):
         """上面相关ui"""
         tab_act = BaseQt(QTabWidget, self, 'ta1')
@@ -43,14 +53,12 @@ class AutoShutdown(QWidget):
 
         tab_act.addTab(QWidget(), "关机", name='ta1')
         tab_act.addTab(QWidget(), "重启", name='ta2')
-        tab_act.addTab(QWidget(), "睡眠", name='ta3')
-        tab_act.addTab(QWidget(), "休眠", name='ta4')
-        tab_act.addTab(QWidget(), "提醒", name='ta5')
-        tab_act.addTab(QWidget(), "命令", name='ta6')
-        tab_act.addTab(QWidget(), "自定义", name='ta7')
+        tab_act.addTab(QWidget(), "提醒", name='ta3')
+        tab_act.addTab(QWidget(), "命令", name='ta4')
+        tab_act.addTab(QWidget(), "其他", name='ta5')
 
-        ui_tab_act_5(self.ta1.ta5)
-        ui_tab_act_6(self.ta1.ta6)
+        ui_tab_act_3(self.ta1.ta3)
+        ui_tab_act_4(self.ta1.ta4)
 
     def ui_tab_fac(self):
         """下面相关ui"""
@@ -68,6 +76,7 @@ class AutoShutdown(QWidget):
 
 def main():
     _app = QApplication(sys.argv)
+    _app.setStyle(QStyleFactory.create("Fusion"))
     _main = AutoShutdown()
     _main.show()
     sys.exit(_app.exec_())

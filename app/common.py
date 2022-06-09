@@ -13,3 +13,20 @@ range_99.setRange(0, 99)
 
 range_9999 = QIntValidator()
 range_9999.setRange(0, 9999)
+
+
+power_by = r'''
+             /)  (\
+       .-._((,~~.))_.-,         //"""/""/
+        `-.   @@   ,-'       //     /  /
+          / ,o--o. \         //╲   /  /
+         ( ( .__.   ) )      //   ╲/,,/
+          ) `----'   (     //
+         /              \  ()
+       /                  \//
+     /                      \
+power by 战斧奶牛
+
+https://www.52pojie.cn/thread-1645599-1-1.html
+
+https://github.com/zhaoxinyuan996/auto-shutdown-py'''

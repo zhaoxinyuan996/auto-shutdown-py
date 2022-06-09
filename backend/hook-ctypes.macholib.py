@@ -1,7 +1,7 @@
 from PyInstaller.utils.hooks import copy_metadata
 
 
-# 这些包需要手动添加
+# 这些包有些情况需要手动添加
 datas = copy_metadata('apscheduler') + copy_metadata('six') + copy_metadata('tzlocal') + copy_metadata('pytz')
 
 """
@@ -20,9 +20,6 @@ nuitka --standalone --mingw64 --nofollow-imports --plugin-enable=upx --windows-d
 """
 
 # 这里会维护一份job和ui必须要的打包的包
-#   job
+#   auto_job
 # pydantic
-# apscheduler 
-#   ui
-# pydantic
-# pyqt5
+# apscheduler

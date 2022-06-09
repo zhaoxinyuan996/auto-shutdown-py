@@ -1,1 +1,0 @@
-[{"act": ["命令", {"cmd": "dir"}], "fac": ["间隔", {"trigger": "interval", "seconds": 10}], "name": "命令->间隔", "is_enable": true}]
