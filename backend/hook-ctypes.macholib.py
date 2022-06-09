@@ -12,11 +12,11 @@ auto_job采用pyinstaller打包，run采用nuitka打包
 #   pyinstaller
 # --additional-hooks-dir=.
 # -F 单文件，-w 不生成控制台
-# pyinstaller -Fw auto_job.py
+# pyinstaller -Fw --additional-hooks-dir . auto_job.py
 
 #   nuitka
 """
-nuitka --standalone --mingw64 --nofollow-imports --plugin-enable=upx --windows-disable-console --plugin-enable=pyqt5 --include-qt-plugins=sensible,styles --follow-import-to=code --output-dir=. run.py
+nuitka --standalone --mingw64 --nofollow-imports --plugin-enable=upx --windows-disable-console --plugin-enable=pyqt5 --include-qt-plugins=sensible,styles --follow-import-to=app --output-dir=. run.py
 """
 
 # 这里会维护一份job和ui必须要的打包的包

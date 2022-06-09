@@ -1,8 +1,9 @@
-import sys
 import os
+import sys
 import json
 import multiprocessing
 from time import sleep
+from file_opt import File
 from datetime import datetime
 from pydantic import BaseModel, validator
 from typing import Dict, Union, List, Any, Tuple, Callable
@@ -16,7 +17,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 def wrap(func: Callable):
     """记录日志的装饰器"""
     def f(*args, **kwargs):
-        with open('logs', 'a', encoding='utf-8') as file:
+        with File('log', encoding='utf-8', mode='a') as file:
             file.write(f'{datetime.now()}-{func.__name__}-{args}-{kwargs}\n')
         return func(*args, **kwargs)
     return f
@@ -32,9 +33,26 @@ def act_2():
     os.system('shutdown -r -f -t 0')
 
 
+@wrap
+def act_5(**kwargs):
+    name = kwargs['name']
+    repeat = kwargs['repeat']
+    if repeat:
+        os.popen(File.get_remind(name))
+    else:
+        os.system(File.get_remind(name))
+
+
+@wrap
+def act_6(**kwargs):
+    os.system(kwargs['cmd'])
+
+
 func_map = {
     '关机': act_1,
     '重启': act_2,
+    '提醒': act_5,
+    '命令': act_6
 }
 
 
@@ -45,6 +63,10 @@ class BaseTri(BaseModel):
 
 class CdTri(BaseTri):
     run_date: datetime
+
+
+class IntervalTri(BaseTri):
+    seconds: int
 
 
 class TimTri(BaseTri):
@@ -59,7 +81,7 @@ class TimTri(BaseTri):
 
 class Config(BaseModel):
     act: Tuple[str, dict]
-    fac: Tuple[str, Union[CdTri, TimTri]]
+    fac: Tuple[str, Union[CdTri, IntervalTri, TimTri]]
     name: str
     is_enable: bool
     _ = validator('act')(lambda t: (func_map[t[0]], t[1]))
@@ -72,7 +94,8 @@ class GetJob:
 
     exec_list = []
     scheduler = BackgroundScheduler()
-    with open('./config.json', encoding='utf-8') as f:
+
+    with File('conf', encoding='utf-8') as f:
         config: List[Dict[str, Any]] = json.loads(f.read())
 
     def gen_params(self):
@@ -94,9 +117,9 @@ class GetJob:
 
 if __name__ == '__main__':
     # 可重入，杀掉原进程，重新生成一个定时进程
-    name = os.path.basename(sys.argv[0])
+    main_name = os.path.basename(sys.argv[0])
     pid = multiprocessing.current_process().pid
-    os.system(f'taskkill /f /fi "imagename eq {name}" /fi "pid ne {pid}"')
+    os.system(f'taskkill /f /fi "imagename eq {main_name}" /fi "pid ne {pid}"')
     # 启用调度器
     job = GetJob()
     job.gen_params()

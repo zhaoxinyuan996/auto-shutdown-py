@@ -1,7 +1,9 @@
 import sys
-from code.qt.entry_qt import Entry
-from code.qt.base_qt import BaseQt
-from code.qt.fac_qt import ui_tab_fac_1, ui_tab_fac_2
+
+from app.qt.act_qt import ui_tab_act_6, ui_tab_act_5
+from app.qt.entry_qt import Entry
+from app.qt.base_qt import BaseQt
+from app.qt.fac_qt import ui_tab_fac_1, ui_tab_fac_2, ui_tab_fac_3
 from PyQt5.QtWidgets import QWidget, QPushButton, QApplication, QTabWidget
 
 
@@ -43,8 +45,12 @@ class AutoShutdown(QWidget):
         tab_act.addTab(QWidget(), "重启", name='ta2')
         tab_act.addTab(QWidget(), "睡眠", name='ta3')
         tab_act.addTab(QWidget(), "休眠", name='ta4')
-        tab_act.addTab(QWidget(), "局域网", name='ta5')
-        tab_act.addTab(QWidget(), "自定义", name='ta6')
+        tab_act.addTab(QWidget(), "提醒", name='ta5')
+        tab_act.addTab(QWidget(), "命令", name='ta6')
+        tab_act.addTab(QWidget(), "自定义", name='ta7')
+
+        ui_tab_act_5(self.ta1.ta5)
+        ui_tab_act_6(self.ta1.ta6)
 
     def ui_tab_fac(self):
         """下面相关ui"""
@@ -52,11 +58,12 @@ class AutoShutdown(QWidget):
         tab_fac.setGeometry(0, 300, 1000, 460)
 
         tab_fac.addTab(QWidget(), "倒计时", name='ta1')
-        tab_fac.addTab(QWidget(), "定时", name='ta2')
-        tab_fac.addTab(QWidget(), "自定义", name='ta3')
-        self.ta2.ta1.time = 0
+        tab_fac.addTab(QWidget(), "间隔", name='ta2')
+        tab_fac.addTab(QWidget(), "定时", name='ta3')
+
         ui_tab_fac_1(self)
         ui_tab_fac_2(self)
+        ui_tab_fac_3(self)
 
 
 def main():

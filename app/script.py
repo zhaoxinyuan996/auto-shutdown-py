@@ -1,3 +1,8 @@
+import os
+import shutil
+from typing import List
+from hashlib import sha1
+from file_opt import File
 from json import JSONEncoder
 from datetime import datetime
 from time import time, strftime, localtime
@@ -73,4 +78,49 @@ def timing_check(v):
     return {'trigger': "cron", **conf}
 
 
+def interval_check(v):
+    """时间间隔check，v:v:self.base.ta2.ta2"""
+    sec = int(v.li1.text() or 0)
+    if sec == 0:
+        raise ValueError('时间间隔必须大于0秒')
+    return {'trigger': 'interval', 'seconds': sec}
+
+
+def remind_check(v):
+    """vbs脚本提示参数检查，v:self.base.ta1.ta5"""
+    words: str = v.li1.text()
+    repeat = bool(v.ti1.checkState())
+    if not words:
+        raise ValueError('请输入提示语！')
+    # 判断文件是否存在
+    name = sha1(words.encode()).hexdigest() + '.vbs'
+    path = File.get_remind(name)
+    if os.path.exists(path):
+        raise ValueError('该提示语已存在！')
+
+    return {'name': name, 'repeat': repeat, 'msg': words}
+
+
+def cmd_check(v):
+    """包装一层cmd空check，原样返回，v:self.base.ta1.ta6.ti1"""
+    return {'cmd': str(v.text())}
+
 # ============各种类型的校验============
+
+
+# ============保存hook============
+def file_save_hook(v: List[dict]):
+    """vbs脚本提示参数检查，v:conf"""
+    # 目前只有remind/vbs，后期可以在这里继续添加维护
+    # 先删除所有文件，再根据配置生成，避免脏文件
+    remind_dir = os.path.dirname(File.get_remind(''))
+    shutil.rmtree(remind_dir)
+    os.mkdir(remind_dir)
+    for i in v:
+        if i['act'][0] != '提醒':
+            continue
+        words = i['act'][1]['msg']
+        name = sha1(words.encode()).hexdigest() + '.vbs'
+        path = File.get_remind(name)
+        with File(path, encoding='ansi', mode='w') as f:
+            f.write(fr'x=Msgbox("{words}",64,FormatDateTime(Now, vbLongDate))')

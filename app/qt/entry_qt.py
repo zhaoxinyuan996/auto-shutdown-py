@@ -1,10 +1,12 @@
 import os
 import json
 from functools import partial
-from code.script import ExtendJson
-from code.qt.base_qt import BaseQt
-from code.mapping import act_map, fac_map
+from app.script import ExtendJson, file_save_hook
+from app.qt.base_qt import BaseQt
+from app.mapping import add_map, delete_map, save_map
 from PyQt5.QtWidgets import QWidget, QLabel, QCheckBox, QPushButton, QMessageBox, QLineEdit
+
+from file_opt import File
 
 
 class Entry:
@@ -30,12 +32,6 @@ class Entry:
         name.setGeometry(100, 0, 500, 50)
         name.setText(f'''{conf['act'][0]}->{conf['fac'][0]}''')
 
-        # 重复功能貌似没意义
-        # repeat = BaseQt(QCheckBox, e, name='repeat')
-        # repeat.setGeometry(650, 0, 150, 50)
-        # repeat.setChecked(True)
-        # repeat.setText('重复')
-
         is_enable = BaseQt(QCheckBox, e, name='is_enable')
         is_enable.setGeometry(780, 0, 150, 50)
         is_enable.setChecked(True)
@@ -48,7 +44,6 @@ class Entry:
 
         if from_file:
             name.setText(conf['name'])
-            # repeat.setChecked(conf['repeat'])
             is_enable.setChecked(conf['is_enable'])
 
         e.show()
@@ -56,29 +51,22 @@ class Entry:
         e.conf = conf
         self.entry_list.append(e)
 
-    def _check(self, _value, _map, _name):
-        """上下选项卡相同逻辑，eval会用到self"""
-        # 不飘黄行不行？
-        _msg = self and {}
-        if _value:
-            _value = eval(_value)
-            _msg = _map[_name][1](_value)
-        return _msg
-
-    @staticmethod
-    def _get_act_fac(act_name, fac_name):
-        act_value, act_check = act_map.get(act_name, (None, None))
-        fac_value, fac_check = fac_map.get(fac_name, (None, None))
-
-        err = ''
-        if act_value is None:
-            err += f'动作[{act_name}]未实现\n'
-        if fac_value is None:
-            err += f'触发[{fac_name}]未实现\n'
-        if err:
-            raise ValueError(err)
-
-        return act_value, act_check, fac_value, fac_check
+    def _entry_hook(self, act_name, fac_name, method):
+        """对应不同的hook函数，报错统一抛ValueError"""
+        method = method or self
+        if method == 'add':
+            map_ = add_map
+        elif method == 'save':
+            map_ = save_map
+        elif method == 'delete':
+            map_ = delete_map
+        else:
+            raise  # 编码问题，无需捕捉
+        hook = map_.get(act_name)
+        act_res = hook and hook[1] and hook[1](eval(hook[0]))
+        hook = map_.get(fac_name)
+        fac_res = hook and hook[1] and hook[1](eval(hook[0]))
+        return act_res, fac_res
 
     def check(self):
         """检查当前入参，失败返回false，成功返回配置"""
@@ -89,10 +77,13 @@ class Entry:
         try:
             act_name = self.base.ta1.tabText(self.base.ta1.currentIndex())
             fac_name = self.base.ta2.tabText(self.base.ta2.currentIndex())
-            act_value, act_check, fac_value, fac_check = self._get_act_fac(act_name, fac_name)
-            # 有值则校验
-            act_msg = self._check(act_value, act_map, act_name)
-            fac_msg = self._check(fac_value, fac_map, fac_name)
+            err = ''
+            err += '' if act_name in add_map else f'动作[{act_name}]未实现\n'
+            err += '' if fac_name in add_map else f'动作[{fac_name}]未实现\n'
+            if err:
+                raise ValueError(err)
+            act_msg, fac_msg = self._entry_hook(act_name, fac_name, 'add')
+
         except ValueError as e:
             return e
 
@@ -121,6 +112,13 @@ class Entry:
 
     def del_entry(self, e):
         """删除条目"""
+        # 删除hook
+        try:
+            self._entry_hook(e.conf['act'][0], e.conf['fac'][0], 'delete')
+        except ValueError as e:
+            QMessageBox.critical(self.base, '错误', str(e))
+            return
+        # 删除逻辑
         self.entry_list.remove(e)
         e.deleteLater()
         self.base.size_shadow[1] -= 50
@@ -136,18 +134,19 @@ class Entry:
         for i in self.entry_list:
             i.conf['name'] = i.name.text()
             i.conf['is_enable'] = bool(i.is_enable.checkState())
-            # i.conf['repeat'] = bool(i.repeat.checkState())
             config.append(i.conf)
-        with open('./config.json', 'w', encoding='utf-8') as f:
-            f.write(json.dumps(config, ensure_ascii=False, cls=ExtendJson))
+            # 保存hook
+        file_save_hook(config)
 
+        with File('conf', encoding='utf-8', mode='w') as f:
+            f.write(json.dumps(config, ensure_ascii=False, cls=ExtendJson))
         print(config)
         self.activate_job()
         QMessageBox.critical(self.base, '应用', '应用成功')
 
     def recovery(self):
         """读取配置文件恢复ui"""
-        with open('./config.json', encoding='utf-8') as f:
+        with File('conf', encoding='utf-8') as f:
             config = json.loads(f.read())
         for i in config:
             self.add_entry(i)
