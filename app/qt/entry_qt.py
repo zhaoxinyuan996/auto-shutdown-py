@@ -124,7 +124,7 @@ class Entry:
         self.length -= 1
         # 重新排列，这里限制5条，不考虑list时间复杂度问题
         for i, e in enumerate(self.entry_list):
-            e.move(0, 850 + 20 * (i - 1))
+            e.move(0, 420 + 20 * (i - 1))
 
     def save(self):
         """保存到配置文件"""
@@ -152,6 +152,4 @@ class Entry:
     @staticmethod
     def activate_job():
         """触发后台任务"""
-        print(call_func)
-        print(call_file)
         call_func(call_file)

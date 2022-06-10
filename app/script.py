@@ -47,7 +47,8 @@ def cd_check(v):
 cron_check = ['year', 'month', 'day_of_week', 'day', 'hour', 'minute', 'second']
 
 # 这个时区无所谓，因为只是做参数校验，auto_job中是自适应时区
-b = BlockingScheduler(timezone=pytz.timezone('Asia/Shanghai'))
+tz = pytz.timezone('Asia/Shanghai')
+b = BlockingScheduler(timezone=tz)
 
 
 def timing_check(v):
@@ -62,7 +63,7 @@ def timing_check(v):
     if not conf:
         raise ValueError('至少选1个')
     # 这里值不合法会抛ValueError
-    b.add_job(lambda: ..., trigger=CronTrigger(**conf))
+    b.add_job(lambda: ..., trigger=CronTrigger(**conf, timezone=tz))
     b.remove_all_jobs()
 
     return {'trigger': "cron", **conf}
