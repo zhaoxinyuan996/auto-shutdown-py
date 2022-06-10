@@ -4,9 +4,14 @@ import sys
 
 # run.py/run.exe文件入口，调用后台py
 call_file = r'python .\backend\auto_job.py'
+call_func = os.popen
 # run.py/run.exe文件入口，调用后台exe
 # call_file = r'.\auto_job.exe'
+# call_func = os.system
 
+if os.path.basename(sys.argv[0]) != 'python.exe':
+    call_file = r'.\auto_job.exe'
+    call_func = os.system
 
 file = os.path.dirname(__file__ if os.path.basename(sys.executable) == 'python.exe' else sys.argv[0])
 

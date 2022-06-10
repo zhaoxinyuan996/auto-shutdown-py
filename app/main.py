@@ -1,13 +1,13 @@
 import sys
-from functools import partial
-
 from PyQt5 import QtCore
-
-from app.qt.any_qt import show_power_by
+from PyQt5.QtCore import Qt
+from functools import partial
 from app.qt.entry_qt import Entry
 from app.qt.base_qt import BaseQt
+from app.qt.any_qt import show_power_by
 from app.qt.act_qt import ui_tab_act_3, ui_tab_act_4
 from app.qt.fac_qt import ui_tab_fac_1, ui_tab_fac_2, ui_tab_fac_3
+
 from PyQt5.QtWidgets import QWidget, QPushButton, QApplication, QTabWidget, QStyleFactory
 
 
@@ -17,7 +17,7 @@ class AutoShutdown(QWidget):
         super().__init__()
         self.setWindowFlags(QtCore.Qt.MSWindowsFixedSizeDialogHint)
 
-        self.size_shadow = [1000, 800]
+        self.size_shadow = [500, 400]
         self.resize(*self.size_shadow)
         self.setWindowTitle("自动关机")
 
@@ -33,23 +33,23 @@ class AutoShutdown(QWidget):
         """按钮相关ui"""
         btn = QPushButton(self)
         btn.setText('添加')
-        btn.setGeometry(700, 760, 150, 40)
+        btn.setGeometry(400, 380, 50, 20)
         btn.clicked.connect(self.entry.add_entry)
 
         btn = QPushButton(self)
         btn.setText('保存')
-        btn.setGeometry(850, 760, 150, 40)
+        btn.setGeometry(450, 380, 50, 20)
         btn.clicked.connect(self.entry.save)
 
         btn = QPushButton(self)
         btn.setText('关于')
-        btn.setGeometry(0, 760, 150, 40)
+        btn.setGeometry(0, 380, 50, 20)
         btn.clicked.connect(partial(show_power_by, self))
 
     def ui_tab_act(self):
         """上面相关ui"""
         tab_act = BaseQt(QTabWidget, self, 'ta1')
-        tab_act.setGeometry(0, 0, 1000, 300)
+        tab_act.setGeometry(0, 0, 500, 150)
 
         tab_act.addTab(QWidget(), "关机", name='ta1')
         tab_act.addTab(QWidget(), "重启", name='ta2')
@@ -63,7 +63,7 @@ class AutoShutdown(QWidget):
     def ui_tab_fac(self):
         """下面相关ui"""
         tab_fac = BaseQt(QTabWidget, self, 'ta2')
-        tab_fac.setGeometry(0, 300, 1000, 460)
+        tab_fac.setGeometry(0, 150, 500, 230)
 
         tab_fac.addTab(QWidget(), "倒计时", name='ta1')
         tab_fac.addTab(QWidget(), "间隔", name='ta2')
@@ -75,6 +75,7 @@ class AutoShutdown(QWidget):
 
 
 def main():
+    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     _app = QApplication(sys.argv)
     _app.setStyle(QStyleFactory.create("Fusion"))
     _main = AutoShutdown()

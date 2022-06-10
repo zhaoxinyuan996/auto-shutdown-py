@@ -1,12 +1,10 @@
-import os
 import json
 from functools import partial
-from app.script import ExtendJson, file_save_hook
 from app.qt.base_qt import BaseQt
+from file_opt import File, call_file, call_func
+from app.script import ExtendJson, file_save_hook
 from app.mapping import add_map, delete_map, save_map
 from PyQt5.QtWidgets import QWidget, QLabel, QCheckBox, QPushButton, QMessageBox, QLineEdit
-
-from file_opt import File, call_file
 
 
 class Entry:
@@ -22,24 +20,24 @@ class Entry:
         """嵌套结构的条目"""
         # ui
         e = BaseQt(QWidget, self.base)
-        e.setGeometry(0, self.base.size_shadow[1], 1000, 50)
+        e.setGeometry(0, self.base.size_shadow[1], 1000, 20)
 
         label = BaseQt(QLabel, e, name='label')
-        label.setGeometry(0, 0, 100, 50)
+        label.setGeometry(5, 0, 100, 20)
         label.setText('任务名称')
 
         name = BaseQt(QLineEdit, e, name='name')
-        name.setGeometry(100, 0, 500, 50)
+        name.setGeometry(60, 0, 250, 20)
         name.setText(f'''{conf['act'][0]}->{conf['fac'][0]}''')
 
         is_enable = BaseQt(QCheckBox, e, name='is_enable')
-        is_enable.setGeometry(780, 0, 150, 50)
+        is_enable.setGeometry(330, 0, 150, 20)
         is_enable.setChecked(True)
         is_enable.setText('启用')
 
         btn = BaseQt(QPushButton, e, name='btn')
         btn.clicked.connect(partial(self.del_entry, e))
-        btn.setGeometry(900, 0, 100, 50)
+        btn.setGeometry(400, 0, 100, 20)
         btn.setText('删除')
 
         if from_file:
@@ -106,7 +104,7 @@ class Entry:
             else:
                 self.build_entry(msg)
         # 主界面回调
-        self.base.size_shadow[1] += 50
+        self.base.size_shadow[1] += 20
         self.base.resize(*self.base.size_shadow)
         self.length += 1
 
@@ -121,12 +119,12 @@ class Entry:
         # 删除逻辑
         self.entry_list.remove(e)
         e.deleteLater()
-        self.base.size_shadow[1] -= 50
+        self.base.size_shadow[1] -= 20
         self.base.resize(*self.base.size_shadow)
         self.length -= 1
         # 重新排列，这里限制5条，不考虑list时间复杂度问题
         for i, e in enumerate(self.entry_list):
-            e.move(0, 850 + 50 * (i - 1))
+            e.move(0, 850 + 20 * (i - 1))
 
     def save(self):
         """保存到配置文件"""
@@ -154,4 +152,6 @@ class Entry:
     @staticmethod
     def activate_job():
         """触发后台任务"""
-        os.popen(call_file)
+        print(call_func)
+        print(call_file)
+        call_func(call_file)

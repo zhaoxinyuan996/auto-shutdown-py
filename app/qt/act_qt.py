@@ -5,23 +5,23 @@ from PyQt5.QtWidgets import QLabel, QLineEdit, QCheckBox
 def ui_tab_act_3(self):
     label = BaseQt(QLabel, self, 'la1')
     label.setText('提醒语')
-    label.setGeometry(50, 30, 800, 40)
+    label.setGeometry(50, 20, 300, 20)
 
     label = BaseQt(QLabel, self, 'la2')
     label.setText('无限提示')
-    label.setGeometry(80, 130, 100, 40)
+    label.setGeometry(70, 80, 100, 20)
 
     line = BaseQt(QLineEdit, self, 'li1')
-    line.setGeometry(50, 80, 800, 40)
+    line.setGeometry(50, 40, 300, 20)
 
     tick = BaseQt(QCheckBox, self, name='ti1')
-    tick.setGeometry(50, 126, 50, 50)
+    tick.setGeometry(50, 80, 50, 20)
 
 
 def ui_tab_act_4(self):
     label = BaseQt(QLabel, self, 'la1')
     label.setText('cmd命令：')
-    label.setGeometry(50, 80, 800, 40)
+    label.setGeometry(50, 30, 100, 20)
 
     line = BaseQt(QLineEdit, self, 'li1')
-    line.setGeometry(50, 120, 800, 40)
+    line.setGeometry(50, 60, 300, 20)

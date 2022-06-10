@@ -6,8 +6,8 @@ from time import sleep
 from file_opt import File
 from datetime import datetime
 from pydantic import BaseModel, validator
-from typing import Dict, Union, List, Any, Tuple, Callable
 from apscheduler.schedulers.background import BackgroundScheduler
+from typing import Dict, Union, List, Any, Tuple, Callable, Optional
 
 # BackgroundScheduler
 # BlockingScheduler
@@ -40,11 +40,10 @@ def act_3(**kwargs):
     if repeat:
         os.popen(File.get_remind(name))
     else:
-        os.system(File.get_remind(name))
-
+        os.popen(File.get_remind(name)).read()
 
 @wrap
-def act_3(**kwargs):
+def act_4(**kwargs):
     os.system(kwargs['cmd'])
 
 
@@ -80,7 +79,7 @@ class TimTri(BaseTri):
 
 
 class Config(BaseModel):
-    act: Tuple[str, dict]
+    act: Tuple[str, Optional[dict]]
     fac: Tuple[str, Union[CdTri, IntervalTri, TimTri]]
     name: str
     is_enable: bool

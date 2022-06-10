@@ -1,11 +1,11 @@
 import os
+import pytz
 from typing import List
-from hashlib import sha1
 from file_opt import File
 from json import JSONEncoder
 from datetime import datetime
 from time import time, strftime, localtime
-from apscheduler.schedulers.background import BlockingScheduler
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 class ExtendJson(JSONEncoder):
@@ -54,25 +54,23 @@ cron_check = {
     'second': (0, 59)
 }
 
-# 这个校验太复杂了，交给库做吧
-b = BlockingScheduler()
+# 这个时区无所谓，因为只是做参数校验，auto_job中是自适应时区
+b = BlockingScheduler(timezone=pytz.timezone('Asia/Shanghai'))
 
 
 def timing_check(v):
     """定时校验，按照定时库的参数，v: self.base.ta2.ta2"""
     conf = {}
-    for i, kv in enumerate(cron_check.items()):
+    for i, kv in enumerate(cron_check):
         label = getattr(v, f'te{i + 1}').text()
-        # 勾选就是*，
-        if getattr(v, f'ti{i + 1}').checkState():
-            conf[kv[0]] = '*'
-        elif label:
-            conf[kv[0]] = label
+        conf.__setitem__(kv, '*') if \
+            getattr(v, f'ti{i + 1}').checkState() \
+            else (conf.__setitem__(kv, label) if label else ...)
 
     if not conf:
         raise ValueError('至少选1个')
     # 这里值不合法会抛ValueError
-    b.add_job(lambda: 0, trigger='cron', **conf)
+    b.add_job(lambda: ..., trigger='cron', **conf)
     b.remove_all_jobs()
 
     return {'trigger': "cron", **conf}
@@ -94,7 +92,7 @@ def remind_check(v):
         raise ValueError('请输入提示语！')
     # 判断文件是否存在
     timestamp = str(time())
-    name = sha1(timestamp.encode()).hexdigest() + '.vbs'
+    name = timestamp + '.vbs'
 
     return {'name': name, 'repeat': repeat, 'msg': words}
 

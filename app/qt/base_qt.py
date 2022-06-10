@@ -1,6 +1,3 @@
-import os
-from file_opt import File
-from hashlib import sha256
 from functools import partial
 from PyQt5.QtWidgets import QTabWidget, QWidget
 
@@ -28,34 +25,34 @@ class BaseQt:
         QTabWidget.addTab(self, p1, p2)
 
 
-def get_hook_class(hook_name, *args, **kwargs):
-    if hook_name == 'remind':
-        return RemindHook(*args, **kwargs)
-    return BaseHook()
-
-
-def single_obj(cls):
-    def f(*args, **kwargs):
-        if not hasattr(cls, 'single'):
-            single = cls(*args, **kwargs)
-            cls.single = single
-        return cls.single
-    return f
-
-
-@single_obj
-class BaseHook:
-    """hook"""
-
-
-@single_obj
-class RemindHook:
-    """提醒功能hook"""
-    def __init__(self, *args, **kwargs):
-        ...
-
-    def delete(self):
-        """删除顺便删文件"""
-
-    def recovery(self):
-        """恢复"""
+# def get_hook_class(hook_name, *args, **kwargs):
+#     if hook_name == 'remind':
+#         return RemindHook(*args, **kwargs)
+#     return BaseHook()
+#
+#
+# def single_obj(cls):
+#     def f(*args, **kwargs):
+#         if not hasattr(cls, 'single'):
+#             single = cls(*args, **kwargs)
+#             cls.single = single
+#         return cls.single
+#     return f
+#
+#
+# @single_obj
+# class BaseHook:
+#     """hook"""
+#
+#
+# @single_obj
+# class RemindHook:
+#     """提醒功能hook"""
+#     def __init__(self, *args, **kwargs):
+#         ...
+#
+#     def delete(self):
+#         """删除顺便删文件"""
+#
+#     def recovery(self):
+#         """恢复"""
