@@ -6,7 +6,7 @@ add_map = {
     '关机': (None, None),
     '重启': (None, None),
     '提醒': ('self.base.ta1.ta3', remind_check),
-    '命令': ('self.base.ta1.ta5.li1', cmd_check),
+    '命令': ('self.base.ta1.ta4.li1', cmd_check),
 
     '倒计时': ('self.base.ta2.ta1.time', cd_check),
     '间隔': ('self.base.ta2.ta2', interval_check),
