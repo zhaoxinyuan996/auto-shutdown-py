@@ -1,6 +1,6 @@
 # auto-shutdown-py
 ## 注意事项
-##吾爱链接：https://www.52pojie.cn/thread-1645599-1-1.html
+## 吾爱链接：https://www.52pojie.cn/thread-1645599-1-1.html
 ### 添加win10白名单
 
 下面有5张图，需要把整个文件夹都添加到白名单，因为main.exe和auto_job.exe通过cmd触发，会被系统拦截
