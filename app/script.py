@@ -43,16 +43,7 @@ def cd_check(v):
     }
 
 
-shadow_flag = ['年', '月', '星期', '日', '时', '分', '秒']
-cron_check = {
-    'year': (2000, 9999),
-    'month': (1, 12),
-    'day_of_week': (0, 6),
-    'day': (1, 31),
-    'hour': (0, 23),
-    'minute': (0, 59),
-    'second': (0, 59)
-}
+cron_check = ['year', 'month', 'day_of_week', 'day', 'hour', 'minute', 'second']
 
 # 这个时区无所谓，因为只是做参数校验，auto_job中是自适应时区
 b = BlockingScheduler(timezone=pytz.timezone('Asia/Shanghai'))
