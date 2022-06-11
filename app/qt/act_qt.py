@@ -7,15 +7,12 @@ def ui_tab_act_3(self):
     label.setText('提醒语')
     label.setGeometry(50, 20, 300, 20)
 
-    label = BaseQt(QLabel, self, 'la2')
-    label.setText('无限提示')
-    label.setGeometry(70, 80, 100, 20)
-
     line = BaseQt(QLineEdit, self, 'li1')
     line.setGeometry(50, 40, 300, 20)
 
     tick = BaseQt(QCheckBox, self, name='ti1')
-    tick.setGeometry(50, 80, 50, 20)
+    tick.setGeometry(50, 80, 100, 20)
+    tick.setText('无限提示')
 
 
 def ui_tab_act_4(self):

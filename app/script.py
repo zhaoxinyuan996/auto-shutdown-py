@@ -73,7 +73,7 @@ def timing_check(v):
             else (conf.__setitem__(kv, label) if label else ...)
 
     if not conf:
-        raise ValueError('至少选1个')
+        raise ValueError('此规则请参考cron\n勾选为每(天/时)')
     # 这里值不合法会抛ValueError
     b.add_job(lambda: ..., trigger=CronTrigger(**conf, timezone=tz))
     b.remove_all_jobs()

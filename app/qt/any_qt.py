@@ -10,4 +10,4 @@ def ta2_ta3_tick_click(tick_no, self):
 
 
 def show_power_by(self):
-    QMessageBox.information(self, "关于", power_by)
+    QMessageBox.about(self, "关于", power_by)

@@ -60,7 +60,7 @@ def ui_tab_fac_2(self):
     label.setGeometry(100, 50, 150, 20)
 
     line = BaseQt(QLineEdit, self.ta2.ta2, 'li1')
-    line.setGeometry(100, 80, 100, 20)
+    line.setGeometry(100, 80, 70, 20)
     line.setValidator(range_9999)
 
 

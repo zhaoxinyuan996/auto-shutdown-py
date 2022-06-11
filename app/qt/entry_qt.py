@@ -52,14 +52,11 @@ class Entry:
     def _entry_hook(self, act_name, fac_name, method):
         """对应不同的hook函数，报错统一抛ValueError"""
         method = method or self
-        if method == 'add':
-            map_ = add_map
-        elif method == 'save':
-            map_ = save_map
-        elif method == 'delete':
-            map_ = delete_map
-        else:
-            raise  # 编码问题，无需捕捉
+        map_ = {
+            'add': add_map,
+            'save': save_map,
+            'delete': delete_map
+        }[method]
         hook = map_.get(act_name)
         act_res = hook and hook[1] and hook[1](eval(hook[0]))
         hook = map_.get(fac_name)
@@ -140,7 +137,7 @@ class Entry:
             f.write(json.dumps(config, ensure_ascii=False, cls=ExtendJson))
         print(config)
         self.activate_job()
-        QMessageBox.critical(self.base, '应用', '应用成功')
+        QMessageBox.about(self.base, '应用', '应用成功')
 
     def recovery(self):
         """读取配置文件恢复ui"""
