@@ -8,7 +8,7 @@ add_map = {
     '提醒': ('self.base.ta1.ta3', remind_check),
     '命令': ('self.base.ta1.ta4.li1', cmd_check),
 
-    '倒计时': ('self.base.ta2.ta1.time', cd_check),
+    '倒计时': ('self.base.ta2.ta1', cd_check),
     '间隔': ('self.base.ta2.ta2', interval_check),
     '定时': ('self.base.ta2.ta3', timing_check)
 }

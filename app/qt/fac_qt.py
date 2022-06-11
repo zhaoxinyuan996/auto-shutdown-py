@@ -9,7 +9,7 @@ from app.common import range_99, range_24, range_60, range_9999
 
 def ui_tab_fac_1(self):
     """倒计时ui"""
-    self.ta2.ta1.time = 0
+    self.ta2.ta1.shift = 0
     label = BaseQt(QLabel, self.ta2.ta1, name='la1')
     label.setText('天      时      分      秒')
     label.setGeometry(100, 50, 300, 20)

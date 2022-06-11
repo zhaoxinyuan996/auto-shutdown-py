@@ -22,6 +22,7 @@ def cd_to_sec(self):
         int(self.te2.text() or 0) * 3600 + \
         int(self.te3.text() or 0) * 60 + \
         int(self.te4.text() or 0)
+    self.shift = sec
     self.la3.setText(f'{sec}')
     self.time = int(time()) + sec  # 触发时间戳
     self.la5.setText(strftime("%Y-%m-%d %H:%M:%S", localtime(self.time)))
@@ -31,13 +32,13 @@ def cd_to_sec(self):
 # 简单且固定的校验就不引用pydantic了
 # ============各种类型的校验============
 def cd_check(v):
-    """倒计时校验，v: self.base.ta2.ta1.time"""
-    if not v:
+    """倒计时校验，v: self.base.ta2.ta1"""
+    if not v.shift:
         raise ValueError('倒计时不可为0')
 
     return {
         'trigger': "date",
-        'run_date': datetime.fromtimestamp(v)
+        'run_date': datetime.fromtimestamp(v.time)
     }
 
 
