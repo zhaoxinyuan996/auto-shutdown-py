@@ -1,12 +1,9 @@
 import os
-import pytz
-from typing import List
 from file_opt import File
 from json import JSONEncoder
+from typing import List, Any
 from datetime import datetime
 from time import time, strftime, localtime
-from apscheduler.triggers.cron import CronTrigger
-from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 class ExtendJson(JSONEncoder):
@@ -46,9 +43,23 @@ def cd_check(v):
 
 cron_check = ['year', 'month', 'day_of_week', 'day', 'hour', 'minute', 'second']
 
-# 这个时区无所谓，因为只是做参数校验，auto_job中是自适应时区
-tz = pytz.timezone('Asia/Shanghai')
-b = BlockingScheduler(timezone=tz)
+b: Any
+tz: Any
+CronTrigger: Any
+
+
+def async_init_aps():
+    """这一步巨慢"""
+    import pytz
+    from apscheduler.triggers.cron import CronTrigger
+    from apscheduler.schedulers.blocking import BlockingScheduler
+
+    global b, tz, CronTrigger
+
+    # 这个时区无所谓，因为只是做参数校验，auto_job中是自适应时区
+    tz = pytz.timezone('Asia/Shanghai')
+    b = BlockingScheduler(timezone=tz)
+    CronTrigger = CronTrigger
 
 
 def timing_check(v):
