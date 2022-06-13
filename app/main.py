@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtCore import Qt
 from threading import Thread
-from functools import partial
+from PyQt5.QtGui import QIcon
 from app.qt.entry_qt import Entry
 from app.qt.base_qt import BaseQt
 from app.script import async_init_aps
@@ -9,6 +9,8 @@ from app.qt.any_qt import show_power_by
 from app.qt.act_qt import ui_tab_act_3, ui_tab_act_4
 from app.qt.fac_qt import ui_tab_fac_1, ui_tab_fac_2, ui_tab_fac_3
 from PyQt5.QtWidgets import QWidget, QPushButton, QApplication, QTabWidget, QStyleFactory
+
+from file_opt import File
 
 
 class AutoShutdown(QWidget):
@@ -18,6 +20,7 @@ class AutoShutdown(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowFlags(Qt.MSWindowsFixedSizeDialogHint)
+        self.setWindowIcon(QIcon(File('ico').real_path))
         self.size_shadow = [500, 400]
         self.resize(*self.size_shadow)
         self.setWindowTitle("自动关机")
@@ -48,7 +51,7 @@ class AutoShutdown(QWidget):
         btn = QPushButton(self)
         btn.setText('关于')
         btn.setGeometry(0, 380, 50, 20)
-        btn.clicked.connect(partial(show_power_by, self))
+        btn.clicked.connect(show_power_by)
         btn.show()
 
     def ui_tab_act(self):

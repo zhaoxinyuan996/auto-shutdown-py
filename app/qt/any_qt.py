@@ -1,3 +1,4 @@
+from PyQt5.QtCore import Qt
 from app.common import power_by
 from PyQt5.QtWidgets import QMessageBox
 
@@ -9,5 +10,5 @@ def ta2_ta3_tick_click(tick_no, self):
     label.setEnabled(not flag)
 
 
-def show_power_by(self):
-    QMessageBox.about(self, "关于", power_by)
+def show_power_by():
+    QMessageBox(QMessageBox.NoIcon, '关于', power_by).exec_()

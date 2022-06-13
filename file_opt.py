@@ -21,6 +21,10 @@ if not os.path.exists(path):
     with open(path, 'w', encoding='utf-8') as f:
         f.write('[]')
 
+path = os.path.join(file, 'static')
+if not os.path.exists(path):
+    os.mkdir(path)
+
 path = os.path.join(file, 'remind')
 if not os.path.exists(path):
     os.mkdir(path)
@@ -30,7 +34,8 @@ class File:
     """统一获取路径"""
     level = {
         'conf': ('config.json', ),
-        'log': ('logs.txt', )
+        'log': ('logs.txt', ),
+        'ico': ('static', 'auto-shutdown-py.ico')
     }
 
     def __init__(self, name, **kwargs):
