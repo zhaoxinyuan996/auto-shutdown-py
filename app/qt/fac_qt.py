@@ -66,68 +66,65 @@ def ui_tab_fac_2(self):
 
 def ui_tab_fac_3(self):
     n = 25
-    left = 100
-    label = BaseQt(QLabel, self.ta2.ta3, name='la1')
-    label.setText('年')
-    label.setGeometry(left, 15, 80, 20)
-    label = BaseQt(QLabel, self.ta2.ta3, name='la2')
-    label.setText('月份')
-    label.setGeometry(left, 15 + n * 1, 80, 20)
-    label = BaseQt(QLabel, self.ta2.ta3, name='la3')
-    label.setText('星期')
-    label.setGeometry(left, 15 + n * 2, 80, 20)
-    label = BaseQt(QLabel, self.ta2.ta3, name='la4')
-    label.setText('日')
-    label.setGeometry(left, 15 + n * 3, 80, 20)
-    label = BaseQt(QLabel, self.ta2.ta3, name='la5')
-    label.setText('时')
-    label.setGeometry(left, 15 + n * 4, 80, 20)
-    label = BaseQt(QLabel, self.ta2.ta3, name='la6')
-    label.setText('分')
-    label.setGeometry(left, 15 + n * 5, 80, 20)
-    label = BaseQt(QLabel, self.ta2.ta3, name='la7')
-    label.setText('秒')
-    label.setGeometry(left, 15 + n * 6, 80, 20)
-    left = 130
+    left = 140
     tick = BaseQt(QCheckBox, self.ta2.ta3, name='ti1')
-    tick.setGeometry(left, 15, 30, 20)
+    tick.setGeometry(left, 15, 200, 20)
     tick.clicked.connect(partial(ta2_ta3_tick_click, '1', self.ta2.ta3))
+    tick.setText('每年(1970-9999)')
     tick = BaseQt(QCheckBox, self.ta2.ta3, name='ti2')
-    tick.setGeometry(left, 15 + n * 1, 30, 20)
+    tick.setGeometry(left, 15 + n * 1, 200, 20)
     tick.clicked.connect(partial(ta2_ta3_tick_click, '2', self.ta2.ta3))
+    tick.setText('每月(1-12)')
     tick = BaseQt(QCheckBox, self.ta2.ta3, name='ti3')
-    tick.setGeometry(left, 15 + n * 2, 30, 20)
+    tick.setGeometry(left, 15 + n * 2, 200, 20)
     tick.clicked.connect(partial(ta2_ta3_tick_click, '3', self.ta2.ta3))
+    tick.setText('周几(0-6)')
     tick = BaseQt(QCheckBox, self.ta2.ta3, name='ti4')
-    tick.setGeometry(left, 15 + n * 3, 30, 20)
+    tick.setGeometry(left, 15 + n * 3, 200, 20)
     tick.clicked.connect(partial(ta2_ta3_tick_click, '4', self.ta2.ta3))
+    tick.setText('每日(1-31)')
     tick = BaseQt(QCheckBox, self.ta2.ta3, name='ti5')
-    tick.setGeometry(left, 15 + n * 4, 30, 20)
+    tick.setGeometry(left, 15 + n * 4, 200, 20)
     tick.clicked.connect(partial(ta2_ta3_tick_click, '5', self.ta2.ta3))
+    tick.setText('每时(0-23)')
     tick = BaseQt(QCheckBox, self.ta2.ta3, name='ti6')
-    tick.setGeometry(left, 15 + n * 5, 30, 20)
+    tick.setGeometry(left, 15 + n * 5, 200, 20)
     tick.clicked.connect(partial(ta2_ta3_tick_click, '6', self.ta2.ta3))
+    tick.setText('每分(0-59)')
     tick = BaseQt(QCheckBox, self.ta2.ta3, name='ti7')
-    tick.setGeometry(left, 15 + n * 6, 30, 20)
+    tick.setGeometry(left, 15 + n * 6, 200, 20)
     tick.clicked.connect(partial(ta2_ta3_tick_click, '7', self.ta2.ta3))
-    left = 160
+    tick.setText('每秒(0-59)')
+    left = 100
     te = BaseQt(QLineEdit, self.ta2.ta3, name='te1')
-    te.setGeometry(left, 15, 40, 20)
+    te.setGeometry(left, 15, 30, 20)
 
     te = BaseQt(QLineEdit, self.ta2.ta3, name='te2')
-    te.setGeometry(left, 15 + n * 1, 40, 20)
+    te.setGeometry(left, 15 + n * 1, 30, 20)
 
     te = BaseQt(QLineEdit, self.ta2.ta3, name='te3')
-    te.setGeometry(left, 15 + n * 2, 40, 20)
+    te.setGeometry(left, 15 + n * 2, 30, 20)
 
     te = BaseQt(QLineEdit, self.ta2.ta3, name='te4')
-    te.setGeometry(left, 15 + n * 3, 40, 20)
+    te.setGeometry(left, 15 + n * 3, 30, 20)
 
     te = BaseQt(QLineEdit, self.ta2.ta3, name='te5')
-    te.setGeometry(left, 15 + n * 4, 40, 20)
+    te.setGeometry(left, 15 + n * 4, 30, 20)
 
     te = BaseQt(QLineEdit, self.ta2.ta3, name='te6')
-    te.setGeometry(left, 15 + n * 5, 40, 20)
+    te.setGeometry(left, 15 + n * 5, 30, 20)
 
     te = BaseQt(QLineEdit, self.ta2.ta3, name='te7')
-    te.setGeometry(left, 15 + n * 6, 40, 20)
+    te.setGeometry(left, 15 + n * 6, 30, 20)
+
+    label = BaseQt(QLabel, self.ta2.ta3, name='la1')
+    label.setGeometry(left + 180, 0, 200, 200)
+    label.setText('''cron常用规则：
+*或勾选\t通配符,例:秒=*即每秒触发
+*/n\t每间隔n触发一次
+a-b\t从a到b每个都触发
+a,b\t只触发a,b
+逗号等必须是英文输入法的符号
+以上为常用规则
+使用库APscheduler
+更多花样请百度[cron规则]''')
