@@ -2,7 +2,7 @@ import os
 import sys
 
 
-call_file =  r'.\python.exe .\backend\auto_job.py'
+call_file =  r'.\python.exe .\backend\auto_job.pyc'
 call_func = os.popen
 
 file = os.path.dirname(__file__ if os.path.basename(sys.executable) == 'python.exe' else sys.argv[0])
