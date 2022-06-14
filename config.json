@@ -1,1 +1,0 @@
-[{"act": ["关机", null], "fac": ["倒计时", {"trigger": "date", "run_date": "2022-06-23 16:16:36"}], "name": "关机->倒计时", "is_enable": true}, {"act": ["关机", null], "fac": ["间隔", {"trigger": "interval", "seconds": 999}], "name": "关机->间隔", "is_enable": true}]
