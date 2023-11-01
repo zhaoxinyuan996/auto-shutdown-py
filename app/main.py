@@ -10,7 +10,7 @@ from app.qt.act_qt import ui_tab_act_3, ui_tab_act_4
 from app.qt.fac_qt import ui_tab_fac_1, ui_tab_fac_2, ui_tab_fac_3
 from PyQt5.QtWidgets import QWidget, QPushButton, QApplication, QTabWidget, QStyleFactory
 
-from file_opt import File
+from file_opt import File, set_startup
 
 
 class AutoShutdown(QWidget):
@@ -27,6 +27,7 @@ class AutoShutdown(QWidget):
 
     def async_qt(self):
         # 异步加载调度器和其他ui
+        set_startup()
         Thread(target=async_init_aps).start()
         self.entry = Entry(self)
         # 初始化ui
